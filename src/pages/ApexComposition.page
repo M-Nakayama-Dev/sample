@@ -1,0 +1,18 @@
+<apex:page standardController="Account"  showHeader="false" sidebar="false">
+    (page)ここはpageです。この下からテンプレートを読み込む
+    <hr/>
+    <apex:composition template="ApexCompositionTemplate">
+        <apex:define name="custom01">
+            (page)ファックス:<apex:inputField id="fax" value="{!Account.fax}" />
+        </apex:define>
+        <apex:define name="custom02">
+            (page)URL:<apex:inputField id="website" value="{!Account.Website}" />
+            (page)=====
+        </apex:define>
+        <apex:define name="custom03">
+            (page)defineで記述したのがテンプレートのinsertに差し込まれる
+        </apex:define>
+    </apex:composition>
+    <hr/>
+    (page)ここはpageです。この上はテンプレート
+</apex:page>

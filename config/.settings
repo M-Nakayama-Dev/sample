@@ -1,0 +1,19 @@
+{
+    "username": "masashi.nakayama@sunsons33.jp", 
+    "environment": "developer", 
+    "project_name": "Nakayama_Dev", 
+    "workspace": "C:\\workspace\\Nakayama_Dev", 
+    "org_url": "", 
+    "namespace": "", 
+    "id": "6L5X2CIO8RPFRPPL6ROORHU5TLLMVW1U", 
+    "metadata_container": "1dc10000000Q4OfAAK", 
+    "subscription": [
+        "ApexClass", 
+        "ApexComponent", 
+        "ApexPage", 
+        "ApexTrigger", 
+        "CustomObject", 
+        "Profile", 
+        "StaticResource"
+    ]
+}

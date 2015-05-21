@@ -1,0 +1,22 @@
+<apex:page controller="UserEntryController" tabstyle="UserListtab__tab">
+<apex:form >
+
+<apex:pagemessages />
+
+<apex:pageblock rendered="{!NOT(ISNULL(qhUser))}">
+
+<apex:pageblocksection title="担当者のレコードです" columns="1">
+
+<apex:repeat value="{!qhUser}" var="us">
+<apex:outputtext value="{!us.Id}" />
+<apex:inputtext value="{!us.Name}" />
+
+
+</apex:repeat>
+
+</apex:pageblocksection>
+
+</apex:pageblock>
+
+</apex:form>
+</apex:page>

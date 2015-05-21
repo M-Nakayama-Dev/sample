@@ -1,0 +1,315 @@
+<apex:page id="page" controller="s2CommonController" showHeader="false" >
+
+<HEAD>
+
+<!-- {$Resource.(静的リソースのファイル名)} -->
+<apex:includeScript value="{!$Resource.jQuery}" />
+<apex:includeScript value="{!$Resource.jQuery_InputHintOverlay}" />
+<apex:includeScript value="{!$Resource.jQuery_FilterInput}" />
+
+<script type="text/javascript"
+    src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+
+<script type="text/javascript">
+        //VisualForceでのセレクタの扱いに注意
+        var jq$ = jQuery.noConflict();
+        function esId(vfid) {
+          return vfid.replace(/:/g,'\\:');
+        }
+        
+        jq$(document).ready(function() {
+            // プレースホルダー(クラスで指定)
+            jq$('.loginform').inputHintOverlay(2,3);
+            // 入力制限(IDで指定、エスケープで指定すること)
+            //$('.input.identityinput').filter_input({regex:'[0-9]'});
+            jq$('#' + esId('page:main:UserId')).filter_input({regex:'[0-9]'});
+        });
+</script>
+
+<title>ログイン画面</title>
+
+<STYLE type="text/css">
+
+/* プレースホルダー */
+    .inputHintOverlay { color: #999; font-size: 14px; }
+    
+BODY {
+  background:#2A94D6;
+  font-family: "Helvetica Neue Regular",Helvetica,sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  color: #586064;
+}
+
+
+HR {
+border: 0;
+    height: 1px;
+    background: #333;
+    background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:    -moz-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:     -ms-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:      -o-linear-gradient(left, #ccc, #333, #ccc);
+}
+
+
+#login {
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 500px;
+}
+
+#login_wrapper {
+    min-width: 280px;
+    /*min-height: 325px;*/
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.4);
+    background-color: #fff;
+    //background: -moz-linear-gradient(center top , #FAFAFA 0%, #E5E5E5 100%) repeat scroll 0% 0% transparent;
+    border-radius: 3px;
+    overflow: hidden;
+    text-align: center;
+}
+
+#left_side {
+    float: left;
+    margin-left: 50px;
+}
+
+#right_side {
+    text-align: right;
+    vertical-align: top;
+}
+
+#loginwidget {
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.loginbox_container, .loginError {
+    float: left;
+    /*width: 280px;*/
+    /*margin-left: 20px;*/
+    /*margin-right: auto;*/
+}
+
+
+.button_container {
+    margin-bottom: 20px;
+    clear: both;
+}
+
+
+.left_container {
+  float:left;
+  /*margin-left: 25px;*/
+  padding: 8px 0px 8px 8px
+}
+.right_container {
+  margin-left: 80px;
+}
+
+.first {
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1) inset;
+    border-radius: 3px 3px 0px 0px;
+}
+.last {
+    border-radius: 0px 0px 3px 3px;
+}
+
+.identity {
+    /*height: 28px;*/
+    padding: 8px 0px 8px 8px;
+    /*background-color: #F3F5F6;*/
+    border-width: 1px;
+    border-style: solid;
+    border-color: #CCC;
+    cursor: pointer;
+    width: 300px;
+}
+
+.zen-assistiveText {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+.t {
+    float: left;
+}
+
+.thumbnail {
+    width: 20px;
+    height: 20px;
+    margin-top: -2px;
+}
+
+.input {
+    margin-left: 0px;
+    margin-top: 0px;
+    border: 0px solid #F3F5F6;
+    font-size: 15px;
+    color: #586064;
+    width: 270px;
+    /*background-color: #F3F5F6;*/
+}
+
+.message {
+  margin: 0 50px 20px 50px;
+  text-align: left;
+}
+
+input.button {
+    margin-top: 15px;
+    line-height: 22px;
+    display: inline-block;
+    padding: 7px 20px;
+    border-radius: 3px;
+    color: #FFF;
+    font-size: 13pt;
+    font-family: "Helvetica Neue Regular","Helvetica Neue",Helvetica,sans-serif;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+    font-weight: 300;
+    background: -moz-linear-gradient(center bottom , #2789C7 0%, #3F9FD9 100%) repeat scroll 0% 0% transparent;
+  background: none repeat scroll 0% 0% #3198D8;
+}
+
+input.button:hover {
+  background: none repeat scroll 0% 0% #51A8F8;
+}
+
+#title {
+    height:40px;
+    width: 300px;
+    text-align: left
+}
+
+.title{
+    height:100px;
+    border-left:7px solid #ccc;
+    padding:.8em .9em;
+}
+.titleb{
+    display: block;
+    padding-top:.2em;
+    font-size:.8em;
+    color:#ccc;
+}
+
+#footer, #footer a {
+    color: #FFF;
+}
+#footer {
+    font-size: 10px;
+    line-height: 14px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 6px;
+}
+
+#logo {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+</STYLE>
+
+
+</HEAD>
+<BODY>
+<apex:form id="main" styleClass="loginform">
+
+<div id="login">
+    <div id="login_wrapper">
+
+      <div id="logo">
+      <img src="{!$Resource.rls_logo}" width="250px"/>          
+      </div>
+
+      <div id="left_side">
+
+      <div id="title">
+          <h3 class="title">ログイン画面</h3>
+      </div>
+
+      <apex:outputPanel id="out">
+      <apex:pageMessages showDetail="false" />
+      </apex:outputPanel>
+
+        <div id="loginwidget">
+          <div class="loginbox_container">
+            <div class="left_container">
+              User ID
+            </div>
+            <div align="right" class="right_container"  onclick="$('input:visible').eq(0).focus();">
+              <div class="identity first">
+                <span class="t">
+                  <!-- サムネイル -->
+                    <img class="thumbnail" src="{!$Resource.User_thumbnail}"/>
+                </span>
+                <apex:inputText styleClass="input identityinput" 
+                    maxlength="10" value="{!UserId}" id="UserId" 
+                    title="従業員番号を入力してください" />
+              </div>
+            </div>
+          </div>
+
+          <div class="loginbox_container">
+            <div class="left_container">
+              Password
+            </div>
+            <div align="right" class="right_container"  onclick="$('input:visible').eq(1).focus();">
+              <div class="identity last">
+                <span class="t">
+                  <!-- サムネイル -->
+                    <img class="thumbnail" src="{!$Resource.Pass_thumbnail}"/>
+                </span>
+                <apex:inputSecret id="Password" styleClass="input identityinput" 
+                    value="{!password}" redisplay="true"
+                    title="パスワードを入力してください"/>
+              </div>
+            </div>
+
+
+
+          </div>
+
+
+
+        </div>
+      </div>
+
+
+      <div class="button_container">
+        <apex:commandButton action="{!doLogin}" styleClass="button" value="ログイン" id="Login"/>
+        <br />
+        <br />
+        <apex:outputLink value="{!URLFOR($Page.s2Reminder)}">
+        <apex:outputText value="パスワードをお忘れですか？(ユーザIDで再登録)" />
+        </apex:outputLink>
+      </div>
+
+    </div>
+
+    <div id="footer">
+        <apex:outputText value="Copyright © 2015 XXXXX Co., Ltd. All Rights Reserved" />
+    </div>
+    
+</div>
+
+
+</apex:form>
+</BODY>
+
+
+
+
+
+</apex:page>

@@ -1,0 +1,308 @@
+<apex:page id="page" controller="s2CommonController" showHeader="false" >
+<HEAD>
+
+<apex:stylesheet value="{!$Resource.jQuery_ValidationEngine_css}"/>
+<apex:includeScript value="{!$Resource.jQuery}" />
+<apex:includeScript value="{!$Resource.jQuery_ValidationEngine}" />
+<apex:includeScript value="{!$Resource.jQuery_ValidationEngine_ja}" />
+
+<title>パスワードリマインダー登録</title>
+
+<STYLE type="text/css">
+
+BODY {
+  background:#2A94D6;
+  font-family: "Helvetica Neue Regular",Helvetica,sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  color: #586064;
+}
+
+
+HR {
+border: 0;
+    height: 1px;
+    background: #333;
+    background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:    -moz-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:     -ms-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:      -o-linear-gradient(left, #ccc, #333, #ccc);
+}
+
+
+#login {
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 500px;
+}
+
+#login_wrapper {
+    min-width: 280px;
+    /*min-height: 325px;*/
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.4);
+    background-color: #fff;
+    //background: -moz-linear-gradient(center top , #FAFAFA 0%, #E5E5E5 100%) repeat scroll 0% 0% transparent;
+    border-radius: 3px;
+    overflow: hidden;
+    text-align: center;
+}
+
+#left_side {
+    float: left;
+    margin-left: 50px;
+}
+
+#right_side {
+    text-align: right;
+    vertical-align: top;
+}
+
+#loginwidget {
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.loginbox_container, .loginError {
+    float: left;
+    /*width: 280px;*/
+    /*margin-left: 20px;*/
+    /*margin-right: auto;*/
+}
+
+
+.button_container {
+    margin-bottom: 20px;
+    clear: both;
+}
+
+
+.left_container {
+  float:left;
+  /*margin-left: 25px;*/
+  padding: 8px 0px 8px 8px
+}
+
+.left_container_pass {
+  float:left;
+  margin-left: 80px;
+  padding: 8px 0px 8px 8px
+}
+
+
+.right_container {
+  margin-left: 100px;
+}
+
+.right_container_pass {
+  margin-left: 230px;
+}
+
+.last {
+    border-radius: 0px 0px 3px 3px;
+}
+
+.identity {
+    padding: 8px 0px 8px 8px;
+    cursor: pointer;
+    width: 300px;
+}
+
+.identity_pass {
+    padding: 8px 0px 8px 8px;
+    width: 200px;
+    text-align: left;
+}
+
+.zen-assistiveText {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+.t {
+    float: left;
+}
+
+.thumbnail {
+    width: 20px;
+    height: 20px;
+    margin-top: -2px;
+}
+
+.input {
+    margin-left: 0px;
+    margin-top: 0px;
+    border: 0px solid #F3F5F6;
+    font-size: 15px;
+    color: #586064;
+    width: 270px;
+    /*background-color: #F3F5F6;*/
+}
+
+.message {
+  margin: 0 50px 20px 50px;
+  text-align: left;
+}
+
+input.button {
+    margin-top: 15px;
+    line-height: 22px;
+    display: inline-block;
+    padding: 7px 20px;
+    border-radius: 3px;
+    color: #FFF;
+    font-size: 13pt;
+    font-family: "Helvetica Neue Regular","Helvetica Neue",Helvetica,sans-serif;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+    font-weight: 300;
+    background: -moz-linear-gradient(center bottom , #2789C7 0%, #3F9FD9 100%) repeat scroll 0% 0% transparent;
+  background: none repeat scroll 0% 0% #3198D8;
+}
+
+input.button:hover {
+  background: none repeat scroll 0% 0% #51A8F8;
+}
+
+#title {
+    height:40px;
+    width: 300px;
+    text-align: left
+}
+
+.title{
+    height:100px;
+    border-left:7px solid #ccc;
+    padding:.8em .9em;
+}
+.titleb{
+    display: block;
+    padding-top:.2em;
+    font-size:.8em;
+    color:#ccc;
+}
+
+#footer, #footer a {
+    color: #FFF;
+}
+#footer {
+    font-size: 10px;
+    line-height: 14px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 6px;
+}
+
+#clear {
+
+    clear: both;
+}
+
+</STYLE>
+
+<script>
+
+
+</script>
+
+</HEAD>
+
+<BODY>
+<apex:form id="main">
+
+<div id="login">
+    <div id="login_wrapper">
+
+      <img src="{!$Resource.Recruit_Logo}"/>
+
+      <div id="left_side">
+          <div id="title">
+              <h3 class="title">パスワード再登録画面</h3>
+          </div>
+      </div>
+
+
+      <apex:outputPanel id="ReminderOK" layout="block" rendered="{!layoutFlg}">
+
+              <div id="clear" />
+      
+              <div class="loginbox_container">
+              
+                <div class="left_container_pass">社員番号</div>
+                <div align="right" class="right_container_pass"  onclick="$('input:visible').eq(0).focus();">
+                  <div class="identity_pass first">
+                    <apex:outputText value="{!UserNumber}" id="UserNumber" />
+                  </div>
+                </div>       
+
+                <div class="left_container_pass">氏名</div>
+                <div align="right" class="right_container_pass"  onclick="$('input:visible').eq(0).focus();">
+                  <div class="identity_pass">
+                    <apex:outputText value="{!UserName}" id="UserName" />
+                  </div>
+                </div>       
+
+                <div class="left_container_pass">有効期限</div>
+                <div align="right" class="right_container_pass"  onclick="$('input:visible').eq(0).focus();">
+                  <div class="identity_pass">
+                    <apex:outputText value="{!ChangeLimit}" id="ChangeLimit" />
+                  </div>
+                </div>       
+    
+                <div class="left_container_pass">新パスワード</div>
+                <div align="right" class="right_container_pass" onclick="$('input:visible').eq(0).focus();">
+                  <div class="identity_pass first">
+                    <apex:inputText style="ime-mode: disabled;" value="{!NewPassword}" id="NewPassword" />
+                  </div>
+                </div>
+                          
+                <div class="left_container_pass">新パスワード(確認用)</div>
+                <div align="right" class="right_container_pass"  onclick="$('input:visible').eq(1).focus();">
+                  <div class="identity_pass">
+                    <apex:inputText style="ime-mode: disabled;"  value="{!ConPassword}" id="ConPassword" />
+                  </div>
+                </div>
+
+               </div>
+        
+          <div class="button_container">
+            <apex:commandButton action="{!doSave}" styleClass="button" value="登録"/>
+            <apex:commandButton action="{!doCancel}" styleClass="button" value="キャンセル"/>
+          </div>
+
+          <apex:outputPanel id="out">
+          <apex:pageMessages showDetail="false" />
+          </apex:outputPanel>
+      
+      </apex:outputPanel>
+
+
+
+        <apex:outputPanel id="ReminderNG" layout="block" rendered="{!layoutFlg!=true}">
+            <div id="left_side">
+            <apex:outputText value="無効なURL、または変更期限が過ぎている可能性があります。" />
+            </div>
+          <div class="button_container">
+            <apex:commandButton action="{!doCancel}"  styleClass="button"  value="ログイン画面へ戻る"/>
+          </div>
+        </apex:outputPanel>
+
+      </div>
+
+    <div id="footer">
+        <apex:outputText value="Copyright © 2015 XXXXX Co., Ltd. All Rights Reserved" />
+    </div>
+
+    
+</div>
+
+</apex:form>
+</BODY>
+
+</apex:page>

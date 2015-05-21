@@ -1,0 +1,1057 @@
+<apex:page controller="s2CommonController" sidebar="false" showChat="false" showHeader="false">
+<html>
+    
+    <head>
+        <title>ミッションシート一括更新</title>
+        <link type="text/css" rel="stylesheet" href="s2MissionSheetUpdatev.css" />        
+        <style type="text/css">
+
+* {
+        box-sizing: border-box;
+        font-family:'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+    }
+
+h1 {
+    font-size:14pt;
+    padding: 0;
+    margin:0;}
+h2 {
+    font-size:12pt;
+    padding: 0;
+    margin:0;
+}
+
+input{
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    text-align:center;    
+    -webkit-box-shadow: 0px 1px rgba(255, 255, 255, 0.5);
+    -moz-box-shadow: 0px 1px rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 1px rgba(255, 255, 255, 0.5);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+select {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;    
+    text-align: left;
+    -webkit-box-shadow: 0px 1px rgba(255, 255, 255, 0.5);
+    -moz-box-shadow: 0px 1px rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 1px rgba(255, 255, 255, 0.5);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+textarea {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;    
+    text-align: left;
+    -webkit-box-shadow: 0px 1px rgba(255, 255, 255, 0.5);
+    -moz-box-shadow: 0px 1px rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 1px rgba(255, 255, 255, 0.5);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+}
+.c {
+    text-align: center;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    line-height:1.4;
+    color:#333;
+    font-family:Arial, sans-serif;
+    font-size:0.9em;
+
+}
+body.sfdcBody {
+    background: none;
+
+    float:left; 
+    white-space: nowrap;
+    overflow: scroll;
+
+}
+
+table {
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+    font-size: 0.75em;
+    width: 100%;
+}
+
+th {
+    white-space: nowrap; 
+    padding: 4px;
+}
+
+td {
+    white-space: nowrap; 
+    padding: 2px;
+}
+
+div#loginInfo{
+    text-align: right;
+    background-color: #1797C0;
+    line-height: 1.6;
+    color: #FFF;
+    font-family: メイリオ, Meiryo,"Hiragino Kaku Gothic Pro","MS PGothic",Verdana,sans-serif;
+    font-size: 0.8em;
+    padding-right: 10px;
+}
+
+div#all {
+    padding: 5px;
+    width: 100%;
+}
+
+div#head{
+    width: 100%;
+}
+
+div#contents{
+    width: 100%;
+    padding-top: 5px;
+}
+
+div#pva {
+    width: 100%;
+    background-color: #FFF;
+}
+
+div#pva-head {
+    width: 100%; 
+    background-color: #badaf2; 
+    padding: 4px;
+    margin-bottom: 5px;
+}
+
+div#pva-body{
+    font-size: 16px;
+}
+/*
+div#pva-body-left{
+    width: 100%;
+    float:left; 
+    white-space: nowrap;
+    overflow: scroll;
+}
+*/
+
+.pageBlock {
+    overflow: hidden;
+    border-radius: 5px;
+    background: none repeat scroll 0% 0% #FFF;
+    top: 1px;
+    position: relative;
+    margin-bottom: 15px;
+    width: 600px;
+    display: inline-block;
+}
+
+.pageBlock tr.Record {
+    height:100px;
+}
+.pageBlock td {
+    border-width: 1px;
+    border-color: #D4DADC;
+    border-style: solid;
+    padding: 5px 2px 3px 5px;
+}
+
+.pageBlock .Header {
+    background-color: #1797C0;
+    color: #FFF;
+    font-size: 1.1em;
+    font-weight: bold;
+    //padding: 5px 2px 4px 5px;
+    border-width: 0px 1px 1px 0px;
+    border-style: solid;
+    border-color: #D4DADC;
+    text-align: center;
+}
+
+.pageBlock .top {
+    background-color: #1caf33;
+    border: none;
+    border-bottom: 2px solid #19764b;
+}
+
+.pageBlock .weight {
+    width: 30px;    
+}
+
+
+.pageBlock td.No {
+    width: 30px;
+}
+
+.pageBlock .c {
+    text-align: center;
+}
+
+.pageBlock .collast {
+    border-width: 0px 2px 1px 0px;
+}
+
+.pageBlock .rowlast {
+    border-bottom-width: 2px;
+}
+
+.pageBlock .theme {
+    background-color: #a9f0ee;
+}
+
+input.checkbox {
+    border:none;
+}
+
+input.button {
+    width:150px;
+    height:30px;
+    display: inline-block;
+    padding: 5px 7x;
+    border-radius: 5px;
+    color: #FFF;
+    font-size: 13pt;
+    font-family: "Helvetica Neue Regular","Helvetica Neue",Helvetica,sans-serif;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+    background: -moz-linear-gradient(center bottom , #2789C7 0%, #3F9FD9 100%) repeat scroll 0% 0% transparent;
+    background: none repeat scroll 0% 0% #3198D8;
+}
+
+
+td.tooltip:hover {
+    background-color: #eaf1fc;
+}
+td.tooltip span {
+     margin-left: -2000px;
+    display:none; 
+    padding:2px 3px; 
+    margin-left:4px; 
+    width:auto;
+    z-index: 1;
+}
+td.tooltip:hover span{
+    display:inline; 
+    position:absolute; 
+    border-top:1px solid #cccccc; 
+    border-right:2px solid #999; 
+    border-bottom:2px solid #999; 
+    background:#fffdce; 
+    color:#222;
+    border-radius: 3px;
+    margin-left: 0px; z-index: 999;
+}
+td.tooltip:hover span:hover{
+    display:none; 
+}
+
+
+
+td.tooltip-left span {
+    display:none; 
+    padding:2px 3px; 
+    margin-left:-100px; 
+    width:auto;
+    z-index: 1;
+}
+td.tooltip-left:hover span{
+    display:inline; 
+    position:absolute; 
+    border-top:1px solid #cccccc; 
+    border-right:2px solid #999; 
+    border-bottom:2px solid #999; 
+    background:#fffdce; 
+    color:#222;
+    border-radius: 3px;
+    margin-left: -470px; z-index: 999;
+}
+td.tooltip-left:hover span:hover{
+    display:none; 
+}
+
+td.data-none {
+    background:#eee;
+}
+        </style>
+    </head>
+
+<!--<apex:pageMessages showDetail="false" />-->
+
+    <body class="sfdcBody">
+
+        <apex:form id="main">
+
+            <div id="loginInfo">
+                ログイン中:&nbsp;テスト　太郎&nbsp;(00000001)&nbsp;&nbsp;
+                <b>ログアウト</b>
+            </div>
+            
+            
+            
+            <div id="all">
+                
+                <div id="head" style="min-width: 800px; padding: 5px; width: 100%; background-color: #FCC;">
+
+                    <table id="title-area">
+                        <h2>ミッションシート一括更新</h2>
+                        <tr>
+                            <td>
+                                <input type="button" class="button" value="保存" />
+                                <input type="button" class="button" value="メンバ非表示" />
+                                <input type="button" class="button" value="再表示" />
+                            </td>                            
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="contents">
+                    
+                    <div id="pva">
+                        
+                        <div id="pva-body">
+                            <div id="pva-body-left">
+                                
+                                <table class="pageBlock">
+
+                                    <!-- ヘッダ部 -->
+                                    <tr>
+                                        <th class="Header top" ><input type="checkbox" class="checkbox" /></th>
+                                        <th class="Header top" >１．テスト　太郎</th>
+                                        <th class="Header top" colspan="2">所属略称：ネットワーク事業部 XXXXXXXX</th>
+                                        <th class="Header top" >100%</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="Header" colspan="5">
+                                            <input type="button" class="button" value="ミッション追加" />
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="Header" colspan="2">目標（数値、テーマ等）</th>
+                                        <th class="Header" >ミッション達成プロセス</th>
+                                        <th class="Header" >達成基準</th>
+                                        <th class="Header" width="30px">Weight</th>
+                                    </tr>
+                                    
+                                    <!---- データレコード部 ---->
+                                    <tr class="Record">
+                                        <td class="c No">1</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="10" maxlength="3" />
+                                        </td>
+                                    </tr>
+                                    <tr class="Record">
+                                        <td class="c No">2</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="10" maxlength="3" />
+                                        </td>
+                                    </tr>
+                                    <tr class="Record">
+                                        <td class="c No">3</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="10" maxlength="3" />
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No">4</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="10" maxlength="3" />
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No">5</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="10" maxlength="3" />
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No">6</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="10" maxlength="3" />
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No">7</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="10" maxlength="3" />
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No">8</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="10" maxlength="3" />
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No">9</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="10" maxlength="3" />
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c rowlast No">10</td>
+                                        <td class="c rowlast tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c rowlast tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c rowlast tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="rowlast collast weight" >
+                                            <input type="text" value="10" maxlength="3" />
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                                
+                                
+                                <table class="pageBlock">
+
+                                    <!-- ヘッダ部 -->
+                                    <tr>
+                                        <th class="Header top" ><input type="checkbox" class="checkbox" /></th>
+                                        <th class="Header top" >２．テスト　次郎</th>
+                                        <th class="Header top" colspan="2">所属略称：ネットワーク事業部 XXXXXXXX</th>
+                                        <th class="Header top" >100%</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="Header" colspan="5">
+                                            <input type="button" class="button" value="ミッション追加" />
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="Header" colspan="2">目標（数値、テーマ等）</th>
+                                        <th class="Header" >ミッション達成プロセス</th>
+                                        <th class="Header" >達成基準</th>
+                                        <th class="Header" width="30px">Weight</th>
+                                    </tr>
+                                    
+                                    <!---- データレコード部 ---->
+                                    <tr class="Record">
+                                        <td class="c No">1</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="20" maxlength="3" />
+                                        </td>
+                                    </tr>
+                                    <tr class="Record">
+                                        <td class="c No">2</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="20" maxlength="3" />
+                                        </td>
+                                    </tr>
+                                    <tr class="Record">
+                                        <td class="c No">3</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="20" maxlength="3" />
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No">4</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="20" maxlength="3" />
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No">5</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="20" maxlength="3" />
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No data-none"></td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="collast weight data-none" >
+                                        </td>
+                                    </tr>
+                                    <tr class="Record">
+                                        <td class="c No data-none"></td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="collast weight data-none" >
+                                        </td>
+                                    </tr>
+                                    <tr class="Record">
+                                        <td class="c No data-none"></td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="collast weight data-none" >
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="Record">
+                                        <td class="c No data-none"></td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="collast weight data-none" >
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No data-none rowlast"></td>
+                                        <td class="c data-none rowlast" width="200px">
+                                        </td>
+                                        <td class="c data-none rowlast" width="200px">
+                                        </td>
+                                        <td class="c data-none rowlast" width="200px">
+                                        </td>
+                                        <td class="collast weight data-none rowlast" >
+                                        </td>
+                                    </tr>
+
+                                </table>                                
+
+                            
+
+                                <table class="pageBlock">
+
+                                    <!-- ヘッダ部 -->
+                                    <tr>
+                                        <th class="Header top" ><input type="checkbox" class="checkbox" /></th>
+                                        <th class="Header top" >３．テスト　三郎</th>
+                                        <th class="Header top" colspan="2">所属略称：ネットワーク事業部 XXXXXXXX</th>
+                                        <th class="Header top" >100%</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="Header" colspan="5">
+                                            <input type="button" class="button" value="ミッション追加" />
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="Header" colspan="2">目標（数値、テーマ等）</th>
+                                        <th class="Header" >ミッション達成プロセス</th>
+                                        <th class="Header" >達成基準</th>
+                                        <th class="Header" width="30px">Weight</th>
+                                    </tr>
+                                    
+                                    <!---- データレコード部 ---->
+                                    <tr class="Record">
+                                        <td class="c No">1</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="50" maxlength="3" />
+                                        </td>
+                                    </tr>
+                                    <tr class="Record">
+                                        <td class="c No">2</td>
+                                        <td class="c tooltip" width="200px">
+                                            <TEXTAREA cols="40" rows="4" >目標のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip" width="200px"><TEXTAREA cols="40" rows="4" >ミッション達成プロセスのテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="c tooltip-left" width="200px"><TEXTAREA cols="40" rows="4" >達成基準のテキストエリア</TEXTAREA>
+                                            <span>
+                                                ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                                <br />ここに前回の入力したテキストが表示されます
+                                            </span>
+                                        </td>
+                                        <td class="collast weight" >
+                                            <input type="text" value="50" maxlength="3" />
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No data-none"></td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="collast weight data-none" >
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No data-none"></td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="collast weight data-none" >
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No data-none"></td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="collast weight data-none" >
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No data-none"></td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="collast weight data-none" >
+                                        </td>
+                                    </tr>
+                                    <tr class="Record">
+                                        <td class="c No data-none"></td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="collast weight data-none" >
+                                        </td>
+                                    </tr>
+                                    <tr class="Record">
+                                        <td class="c No data-none"></td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="collast weight data-none" >
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="Record">
+                                        <td class="c No data-none"></td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="c data-none" width="200px">
+                                        </td>
+                                        <td class="collast weight data-none" >
+                                        </td>
+                                    </tr>
+
+                                    <tr class="Record">
+                                        <td class="c No data-none rowlast"></td>
+                                        <td class="c data-none rowlast" width="200px">
+                                        </td>
+                                        <td class="c data-none rowlast" width="200px">
+                                        </td>
+                                        <td class="c data-none rowlast" width="200px">
+                                        </td>
+                                        <td class="collast weight data-none rowlast" >
+                                        </td>
+                                    </tr>
+
+                                </table>
+                                
+                            </div>
+                            
+                            <div id="clear" style="clear:both" />
+                        </div>
+                    </div>
+                    
+
+                </div>                
+            </div>
+            
+</apex:form>
+
+</body>
+</html>
+
+</apex:page>

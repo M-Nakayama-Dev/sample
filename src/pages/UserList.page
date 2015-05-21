@@ -1,0 +1,33 @@
+<apex:page controller="UserListController" tabStyle="UserListtab__tab">
+
+<apex:form >
+
+    <apex:pagemessages ></apex:pagemessages> 
+
+    <apex:pageblock title="正社員一覧" rendered="{!isRenderedList}">
+    
+        <apex:pageblocktable value="{!qhUser}" var="us">
+            <apex:column >            
+                <apex:facet name="header">氏名</apex:facet>
+                
+                <apex:commandlink action="{!titleLinkHandler}">
+                <apex:outputtext value="{!us.Name}" />
+                <apex:param name="Id" value="{!us.Id}" />
+                </apex:commandlink>
+                
+            </apex:column>
+            <apex:column >            
+                <apex:facet name="header">ID</apex:facet>
+                <apex:outputtext value="{!us.Id}" />
+            </apex:column>
+            <apex:column >            
+                <apex:facet name="header">正社員</apex:facet>
+                <apex:outputtext value="{!us.fulltime__c}" />
+            </apex:column>
+        </apex:pageblocktable>
+    
+    </apex:pageblock>
+
+</apex:form>
+
+</apex:page>

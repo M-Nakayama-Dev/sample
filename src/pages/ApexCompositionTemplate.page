@@ -1,0 +1,26 @@
+<apex:page standardController="Account" >
+(template)ここからテンプレート↓↓
+<apex:pageBlock >
+  <apex:form >
+  
+      <apex:commandButton action="{!save}" value="Save" id="theButton" />
+      <apex:inputField id="name" value="{!Account.name}" />
+
+      <apex:pageBlockSection title="section1" rendered="true">
+          <apex:insert name="custom01" />
+      </apex:pageBlockSection>
+
+      <apex:inputField id="Industry" value="{!Account.Industry}" />
+
+      <apex:pageBlockSection title="section2" rendered="true">
+          <apex:insert name="custom02" />
+      </apex:pageBlockSection>
+
+      <apex:pageBlockSection title="section3" rendered="false">
+          <apex:insert name="custom03" />
+      </apex:pageBlockSection>
+
+  </apex:form>
+</apex:pageBlock>
+(template)ここまでテンプレート↑↑
+</apex:page>
